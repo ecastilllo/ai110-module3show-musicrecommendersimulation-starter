@@ -19,7 +19,7 @@ Replace this paragraph with your own summary of what your version does.
 
 Streaming platforms use listening behavior and track attributes to predict what people may enjoy. Collaborative filtering looks for patterns across listeners, such as which tracks are often played by people with similar listening habits. Content-based filtering compares track attributes with a listener's preferences. For example, Spotify describes using listening history, relationships between tracks, and audio attributes to personalize playlists at scale. [Spotify Engineering](https://engineering.atspotify.com/2023/04/humans-machines-a-look-behind-spotifys-algotorial-playlists)
 
-The simulation will use content-based filtering to match songs to a listener's preferences.
+The simulation uses content-based filtering to match songs to a listener's preferences.
 
 ### Catalog and taste profile
 
@@ -66,6 +66,7 @@ This profile distinguishes chill lofi from intense rock because the tracks diffe
    python -m venv .venv
    source .venv/bin/activate      # Mac or Linux
    .venv\Scripts\activate         # Windows
+   ```
 
 2. Install dependencies
 
@@ -93,18 +94,24 @@ You can add more tests in `tests/test_recommender.py`.
 
 ## Sample Recommendation Output
 
-Paste a sample of your recommender's output here as a text block so a reader can see what it produces:
+Run `python -m src.main` from the project directory to see the default pop/happy profile's recommendations.
 
-```
-# e.g.:
-# User profile: genre=indie, mood=chill, energy=low
-# Recommendations:
-#   1. ...
-#   2. ...
-#   3. ...
-```
+```text
+Loaded songs: 18
+Profile: pop / happy / target energy 0.80
 
-**Screenshot or video** *(optional)*: <!-- Insert a screenshot or demo video link here -->
+Top recommendations:
+1. Sunrise City - Score: 99.40
+   Because: Mood match (happy, +40.00); Genre match (pop, +30.00); Energy similarity (0.82 vs target 0.80, +29.40)
+2. Rooftop Lights - Score: 68.80
+   Because: Mood match (happy, +40.00); Energy similarity (0.76 vs target 0.80, +28.80)
+3. Gym Hero - Score: 56.10
+   Because: Genre match (pop, +30.00); Energy similarity (0.93 vs target 0.80, +26.10)
+4. Night Drive Loop - Score: 28.50
+   Because: Energy similarity (0.75 vs target 0.80, +28.50)
+5. City in Motion - Score: 27.90
+   Because: Energy similarity (0.73 vs target 0.80, +27.90)
+```
 
 ---
 
