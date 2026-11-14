@@ -117,11 +117,7 @@ Top recommendations:
 
 ## Experiments You Tried
 
-Use this section to document the experiments you ran. For example:
-
-- What happened when you changed the weight on genre from 2.0 to 0.5
-- What happened when you added tempo or valence to the score
-- How did your system behave for different types of users
+Run `python -m src.main --evaluate` to see the top five results for all four test profiles. The model card records the terminal output, profile comparisons, and what happened when the energy weight doubled and the genre bonus was halved. [Evaluation results](model_card.md#7-evaluation)
 
 ---
 
