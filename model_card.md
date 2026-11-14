@@ -2,11 +2,15 @@
 
 ## 1. Model Name
 
-**Music Recommender Simulation (CLI)**
+**MoodMix 1.0**
 
-## 2. Intended Use
+## 2. Goal and Intended Use
 
-This classroom simulator recommends tracks based on a listener's preferred genre, mood, and target energy. Its explanations show how each preference contributes to the results.
+MoodMix suggests up to five songs from the catalog based on a listener's preferred genre, mood, and target energy. It explains the points each recommendation earns.
+
+**Intended use.** Classroom demonstrations and experiments with recommendation rules.
+
+**Non-intended use.** Production music recommendations, where the catalog and evaluation would need to represent real listeners and a wider range of music.
 
 ## 3. How the Model Works
 
@@ -14,7 +18,7 @@ A matching mood earns 40 points, a matching genre earns 30, and a track earns up
 
 ## 4. Data
 
-The catalog contains 18 fictional songs, including eight additions to the starter catalog. Genres include lofi, pop, rock, folk, funk, and house. Moods include chill, happy, intense, and melancholic. The CSV also records tempo, valence, danceability, and acousticness. Scoring uses genre, mood, and energy.
+The catalog contains 18 fictional songs, including eight additions to the starter catalog. Genres include lofi, pop, rock, folk, funk, and house. Moods include chill, happy, intense, and melancholic. The CSV also records tempo, valence, danceability, and acousticness. Scoring uses genre, mood, and energy. Each track has one mood label, and the small catalog has limited coverage of genre and mood combinations.
 
 ## 5. Strengths
 
@@ -136,16 +140,14 @@ I temporarily halved the genre bonus from 30 to 15 and doubled the maximum energ
 
 The top five stayed in the same order for all four profiles. For High-Energy Pop, the score gap between Gym Hero and Night Drive Loop shrank from 27.60 to 10.20 points. The change affected score gaps without improving the recommendations in these runs. The default CLI retains the original weights.
 
-## 8. Future Work
+## 8. Ideas for Improvement
 
-Test whether partial credit for related mood labels improves the results. Show when the requested mood is missing and repeat the evaluation with a larger catalog.
+- Give partial credit to related moods, such as `sad` and `melancholic`, and check whether the new matches fit the requested mood.
+- Tell listeners when a requested mood is missing and label the results as partial matches.
+- Add tracks that cover more combinations of genre, mood, and energy, then rerun the same four profiles.
 
 ## 9. Personal Reflection
 
-A few sentences about your experience.  
+My biggest learning moment was seeing how much the song labels shaped the results. The chill lofi list felt believable with just genre, mood, and energy. Midnight Coding matched all three, and the ambient track Spacewalk Thoughts still made sense in the same playlist because it matched the chill mood. The sad pop test showed the other side of that rule. Gym Hero came first because the catalog had no track labeled sad, even though Gym Hero is labeled intense.
 
-Prompts:  
-
-- What you learned about recommender systems  
-- Something unexpected or interesting you discovered  
-- How this changed the way you think about music recommendation apps
+I used an AI assistant to expand the catalog, turn the scoring plan into Python, and suggest an edge case. The weight experiment was where I needed to check the output. Doubling energy and halving genre sounded like a change that would reorder the songs, but all four top-five rankings stayed the same. Next I would test partial credit for related moods, such as sad and melancholic, on a larger catalog. I would compare the same profiles before and after to see whether the resulting playlists fit the requests better.

@@ -11,7 +11,7 @@ Your goal is to:
 - Evaluate what your system gets right and wrong
 - Reflect on how this mirrors real world AI recommenders
 
-Replace this paragraph with your own summary of what your version does.
+MoodMix 1.0 ranks a catalog of 18 fictional songs by how closely they match a preferred genre, mood, and energy level. The command-line output explains the score for each recommendation.
 
 ---
 
@@ -137,14 +137,4 @@ You will go deeper on this in your model card.
 
 ## Reflection
 
-Read and complete `model_card.md`:
-
-[**Model Card**](model_card.md)
-
-Write 1 to 2 paragraphs here about what you learned:
-
-- about how recommenders turn data into predictions
-- about where bias or unfairness could show up in systems like this
-
-
-
+The model card explains what I learned about scoring, how I used AI during development, and what I would test next. [Personal reflection](model_card.md#9-personal-reflection)
