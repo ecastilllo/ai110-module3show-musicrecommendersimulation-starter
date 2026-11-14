@@ -17,17 +17,12 @@ Replace this paragraph with your own summary of what your version does.
 
 ## How The System Works
 
-Explain your design in plain language.
+Streaming platforms use listening behavior and track attributes to predict what people may enjoy. Collaborative filtering looks for patterns across listeners, such as which tracks are often played by people with similar listening habits. Content-based filtering compares track attributes with a listener's preferences. For example, Spotify describes using listening history, relationships between tracks, and audio attributes to personalize playlists at scale. [Spotify Engineering](https://engineering.atspotify.com/2023/04/humans-machines-a-look-behind-spotifys-algotorial-playlists)
 
-Some prompts to answer:
+This simulation will use content-based filtering. A song earns 40 points for matching the preferred mood, 30 for matching the preferred genre, and up to 30 for energy similarity. On a 0–1 scale, the energy points are `30 × (1 − abs(song_energy − target_energy))`. The recommender will add those points for each song and sort the catalog from highest to lowest total score.
 
-- What features does each `Song` use in your system
-  - For example: genre, mood, energy, tempo
-- What information does your `UserProfile` store
-- How does your `Recommender` compute a score for each song
-- How do you choose which songs to recommend
-
-You can include a simple diagram or bullet list if helpful.
+- `Song` uses `id`, `title`, and `artist` to identify and display tracks. It uses `genre`, `mood`, and `energy` for scoring.
+- `UserProfile` stores a preferred genre, a preferred mood, and a target energy on a 0–1 scale.
 
 ---
 
