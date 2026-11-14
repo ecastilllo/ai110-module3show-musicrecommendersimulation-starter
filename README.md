@@ -19,10 +19,40 @@ Replace this paragraph with your own summary of what your version does.
 
 Streaming platforms use listening behavior and track attributes to predict what people may enjoy. Collaborative filtering looks for patterns across listeners, such as which tracks are often played by people with similar listening habits. Content-based filtering compares track attributes with a listener's preferences. For example, Spotify describes using listening history, relationships between tracks, and audio attributes to personalize playlists at scale. [Spotify Engineering](https://engineering.atspotify.com/2023/04/humans-machines-a-look-behind-spotifys-algotorial-playlists)
 
-This simulation will use content-based filtering. A song earns 40 points for matching the preferred mood, 30 for matching the preferred genre, and up to 30 for energy similarity. On a 0–1 scale, the energy points are `30 × (1 − abs(song_energy − target_energy))`. The recommender will add those points for each song and sort the catalog from highest to lowest total score.
+The simulation will use content-based filtering to match songs to a listener's preferences.
 
-- `Song` uses `id`, `title`, and `artist` to identify and display tracks. It uses `genre`, `mood`, and `energy` for scoring.
-- `UserProfile` stores a preferred genre, a preferred mood, and a target energy on a 0–1 scale.
+### Catalog and taste profile
+
+The catalog in `data/songs.csv` contains 18 tracks, including eight fictional tracks that add new genres and moods. Each `Song` uses `id`, `title`, and `artist` for identification and display. Scoring uses `genre`, `mood`, and `energy`. The CSV also records tempo, valence, danceability, and acousticness for future experiments.
+
+The example `UserProfile` is a dictionary for a listener who wants chill lofi near 0.40 energy:
+
+```python
+{
+    "favorite_genre": "lofi",
+    "favorite_mood": "chill",
+    "target_energy": 0.40,
+}
+```
+
+This profile distinguishes chill lofi from intense rock because the tracks differ in all three scoring features. With these settings, Midnight Coding scores 99.4 and Storm Runner scores 14.7. For a profile targeting intense rock at 0.90 energy, Storm Runner leads the catalog with 99.7. A single genre, mood, and energy target describes one listening context. A profile with multiple preferences could represent someone who likes both styles.
+
+### Algorithm recipe
+
+1. Load the song records and read the listener's profile and the requested number of recommendations, `k`.
+2. For each song, award 40 points for an exact mood match and 30 for an exact genre match. Each mismatch earns zero points for that feature.
+3. Add up to 30 energy points using `30 × (1 − abs(song_energy − target_energy))`. Song energy and the target both use a 0–1 scale. Equally close values earn the same points.
+4. Sort by total score from highest to lowest. Break exact score ties by ascending song ID and return the first `k` songs.
+
+**Weight choice.** The genre-first recipe from the assignment (2 for genre, 1 for mood, and up to 1 for energy) ranks Focus Flow (3.00) above Spacewalk Thoughts (1.88) for the chill lofi profile. The chosen mood-first recipe gives Spacewalk Thoughts 66.4 and Focus Flow 60.0. For this example, the requested chill mood matters most.
+
+### Data flow
+
+1. **Input** — Read the taste profile, the song catalog, and `k`.
+2. **Processing** — Compare each song with the profile and record its total score.
+3. **Output** — Sort the scored tracks and return the top `k`. For the example profile and `k = 3`, the expected order is 1. Midnight Coding (99.4), 2. Library Rain (98.5), 3. Spacewalk Thoughts (66.4).
+
+**Potential bias.** Exact labels can split tracks that feel similar, such as `chill` and `relaxed`. Giving mood the most weight can favor tracks labeled `chill` even when tracks with other labels match the listener's genre and energy more closely. Genres with more tracks in this small catalog also have more opportunities to appear in the top results.
 
 ---
 
